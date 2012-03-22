@@ -1,0 +1,9 @@
+Import('env')
+
+env = env.Clone()
+thisDir = Dir('.').abspath
+env.PrependENVPath('GOPATH', thisDir)
+
+wsock = env.GoInstallPkg('wsock')
+exe = env.GoInstall('app', [wsock])
+Install(env.subst('$BINDIR'), exe)

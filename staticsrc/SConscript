@@ -1,0 +1,12 @@
+import os
+
+Import('env')
+
+scriptdir = os.path.join(env.subst('$STATICDIR'), 'scripts')
+cssdir = os.path.join(env.subst('$STATICDIR'), 'css')
+
+Export('scriptdir', 'cssdir')
+
+SConscript('scripts/SConscript')
+#SConscript('css/SConscript')
+
