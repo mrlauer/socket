@@ -4,8 +4,6 @@ env = env.Clone()
 thisDir = Dir('.').abspath
 env.PrependENVPath('GOPATH', thisDir)
 
-env['GOINSTALLFLAGS'] = '-x -gcflags -N'
-
 wsock = env.GoInstallPkg('wsock')
 exe = env.GoInstall('app', [wsock])
 Install(env.subst('$BINDIR'), exe)

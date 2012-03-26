@@ -47,7 +47,7 @@ def generate(env):
     goarchchar = "6"
     is64 = (sys.maxsize > 2**32)
     if not is64:
-        if machine == "i386":
+        if machine == "i386" or machine == "i686":
             goarch = "386"
             goarchchar = "8"
         else:
