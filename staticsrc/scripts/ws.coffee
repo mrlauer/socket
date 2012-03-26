@@ -44,7 +44,7 @@ $( ->
         slen = hex len
         while slen.length < 8
             slen = "0" + slen
-        ws.send slen + js
+        ws.send js
 
     write "URL is #{document.location.host}"
 )

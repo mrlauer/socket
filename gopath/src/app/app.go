@@ -1,6 +1,7 @@
 package main
 
 import (
+	"code.google.com/p/go.net/websocket"
 	"fmt"
 	"html/template"
 	"io"
@@ -70,6 +71,27 @@ func socketHandler(inst *wsock.SocketInstance, length int64, data io.Reader) err
 	return nil
 }
 
+func hackfn(data string, pdata *string) {
+	fmt.Printf("data is %q\n", data)
+}
+
+func socketHandler2(ws *websocket.Conn) {
+	for {
+		var data string
+		err := websocket.Message.Receive(ws, &data)
+		if err == io.EOF {
+			break
+		} else if err != nil {
+			fmt.Printf("Got error %q\n", err.Error())
+		} else {
+			hackfn(data, &data)
+			fmt.Printf("Got message %s\n", data)
+			websocket.Message.Send(ws, data)
+		}
+	}
+	fmt.Printf("byebye!")
+}
+
 var comm chan []byte
 
 func scanStdin() {
@@ -89,7 +111,8 @@ func main() {
 	StaticDir = path.Join(appDir, "..", "static")
 	http.HandleFunc(`/`, handleIndex)
 	http.HandleFunc(`/static/`, handleStatic)
-	http.Handle(`/news`, wsock.SocketHandlerFuncs(socketConnectionHandler, socketHandler))
+//	  http.Handle(`/news`, wsock.SocketHandlerFuncs(socketConnectionHandler, socketHandler))
+	http.Handle(`/news`, websocket.Handler(socketHandler2))
 	fmt.Printf("listening on localhost:8082\n")
 	go scanStdin()
 	http.ListenAndServe(":8082", nil)
