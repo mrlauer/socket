@@ -40,7 +40,7 @@ def generate(env):
     # Should this be in a Configure block?
     # we'll get GOROOT from the environment for now.
     env.SetDefault(GOROOT = os.environ.get('GOROOT'))
-    env['ENV']['GOROOT'] = env.GOROOT
+    env['ENV']['GOROOT'] = env['GOROOT']
     system = platform.system()
     env.SetDefault(GOOS = system.lower())
     machine = platform.machine()
