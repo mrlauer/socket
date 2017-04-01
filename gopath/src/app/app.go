@@ -113,7 +113,7 @@ func main() {
 	http.HandleFunc(`/static/`, handleStatic)
 //	  http.Handle(`/news`, wsock.SocketHandlerFuncs(socketConnectionHandler, socketHandler))
 	http.Handle(`/news`, websocket.Handler(socketHandler2))
-	fmt.Printf("listening on localhost:8082\n")
+	fmt.Printf("listening on localhost:8001\n")
 	go scanStdin()
-	http.ListenAndServe(":8082", nil)
+	http.ListenAndServe(":8001", nil)
 }

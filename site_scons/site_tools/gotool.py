@@ -40,6 +40,7 @@ def generate(env):
     # Should this be in a Configure block?
     # we'll get GOROOT from the environment for now.
     env.SetDefault(GOROOT = os.environ.get('GOROOT'))
+    env['ENV']['GOROOT'] = env['GOROOT']
     system = platform.system()
     env.SetDefault(GOOS = system.lower())
     machine = platform.machine()
@@ -47,7 +48,7 @@ def generate(env):
     goarchchar = "6"
     is64 = (sys.maxsize > 2**32)
     if not is64:
-        if machine == "i386":
+        if machine == "i386" or machine == "i686":
             goarch = "386"
             goarchchar = "8"
         else:
